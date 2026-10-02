@@ -1,0 +1,506 @@
+/* NOS-huisstijl zoals op nos.nl/sport: Effra-Bold voor koppen, Helvetica Neue voor tekst */
+@font-face {
+  font-family: Effra-Bold;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('https://static.nos.nl/fonts/effra/EffraBold.woff2') format('woff2'),
+    url('https://static.nos.nl/fonts/effra/EffraBold.woff') format('woff');
+}
+
+/* Zelfde waarden als NOS in src/map/flavor.ts */
+:root {
+  --nos-page: #202020;
+  --nos-surface: #444444;
+  --nos-surface-line: #5a5a5a;
+  --nos-ink: #f2f2f5;
+  --nos-muted: #a1a1ac;
+  --nos-black: #1e1e1e;
+  --nos-blue: #284bbe;
+  --nos-blue-light: #3ca0ff;
+  --nos-red: #e61e14;
+  --display: Effra-Bold, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --shadow: 0 4px 14px rgb(6 12 60 / 0.45);
+  color-scheme: dark;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--nos-page);
+  color: var(--nos-ink);
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--nos-blue);
+  color: #fff;
+}
+
+#map {
+  position: fixed;
+  inset: 0;
+}
+
+/* Kop: NOS-kavel en titel-pill, zoals de Zandvoort-special */
+
+.masthead {
+  position: fixed;
+  top: 0;
+  left: clamp(16px, 3vw, 40px);
+  right: 64px; /* vrij van de zoomknoppen */
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  pointer-events: none;
+}
+
+.nos-logo-wrap {
+  flex-shrink: 0;
+  padding: 12px 18px 15px;
+  border-radius: 0 0 10px 10px;
+  background: #fff;
+  box-shadow: 0 6px 24px rgb(6 12 60 / 0.45);
+}
+
+.nos-logo {
+  display: block;
+  width: 74px;
+  height: auto;
+  color: rgb(148 148 148); /* officiële grijze logovariant; de O blijft rood */
+}
+
+.map-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 14px;
+}
+
+.map-label {
+  margin: 0;
+  padding: 4px 16px 5px;
+  border-radius: 18px;
+  background: var(--nos-black);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  box-shadow: var(--shadow);
+}
+
+.map-count {
+  margin: 0;
+  padding: 6px 14px 7px;
+  border-radius: 999px;
+  background: var(--nos-surface);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 600px) {
+  .nos-logo-wrap {
+    padding: 9px 13px 11px;
+  }
+
+  .nos-logo {
+    width: 56px;
+  }
+
+  .map-caption {
+    margin-top: 10px;
+  }
+
+  .map-label {
+    font-size: 1rem;
+    padding: 3px 13px 4px;
+  }
+
+  .map-count {
+    font-size: 0.72rem;
+    padding: 5px 11px 6px;
+  }
+}
+
+/* MapLibre-bediening in NOS Sport-stijl (donkere knoppen zoals op nos.nl) */
+
+.maplibregl-map {
+  font: 12px/1.4 var(--body);
+}
+
+.maplibregl-canvas:focus-visible {
+  outline: 2px solid var(--nos-blue-light);
+  outline-offset: -2px;
+}
+
+.maplibregl-ctrl-group {
+  border-radius: 8px;
+  background: var(--nos-surface);
+}
+
+.maplibregl-ctrl-group:not(:empty) {
+  box-shadow: var(--shadow);
+}
+
+.maplibregl-ctrl-group button {
+  width: 36px;
+  height: 36px;
+}
+
+.maplibregl-ctrl-group button + button {
+  border-top-color: var(--nos-surface-line);
+}
+
+/* De iconen van MapLibre zijn donker; op de grijze knoppen moeten ze wit zijn. */
+.maplibregl-ctrl button .maplibregl-ctrl-icon,
+.maplibregl-ctrl-attrib-button {
+  filter: invert(1);
+}
+
+@media (hover: hover) {
+  .maplibregl-ctrl-group button:not(:disabled):hover {
+    background-color: rgb(255 255 255 / 0.1);
+  }
+}
+
+.maplibregl-ctrl-group button:focus:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.maplibregl-ctrl-group button:focus:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.maplibregl-ctrl-group button:focus:focus-visible {
+  box-shadow: none;
+  outline: 2px solid var(--nos-blue-light);
+  outline-offset: -2px;
+}
+
+.maplibregl-ctrl-attrib-button:focus-visible {
+  box-shadow: none;
+  outline: 2px solid #c35f00; /* invert() maakt hier NOS-lichtblauw (#3ca0ff) van */
+  outline-offset: 1px;
+}
+
+.maplibregl-ctrl-attrib-button:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-attrib {
+  font-size: 11px;
+  color: var(--nos-muted);
+  background-color: rgb(32 32 32 / 0.8);
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact {
+  background-color: rgb(32 32 32 / 0.8);
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--nos-ink);
+}
+
+.maplibregl-ctrl-attrib a:hover {
+  color: var(--nos-blue-light);
+}
+
+.maplibregl-ctrl-scale {
+  border-color: var(--nos-muted);
+  border-width: 0 1px 1px;
+  color: var(--nos-ink);
+  background-color: rgb(32 32 32 / 0.7);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Video's op de kaart: vierkante foto's met witte rand, zoals de foto-markers in Zandvoort */
+
+/* Houdt de z-index van de markers binnen de kaart, zodat ze nooit over de knoppen vallen. */
+.maplibregl-canvas-container {
+  isolation: isolate;
+}
+
+.video-marker {
+  --size: 64px;
+  z-index: var(--stack);
+  display: block;
+  padding: 0 0 8px; /* ruimte voor de punt, die precies op de locatie staat */
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.video-marker__card {
+  position: relative;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  border: 3px solid #fff;
+  border-radius: 12px;
+  background: var(--nos-blue);
+  box-shadow: var(--shadow);
+  transform-origin: 50% calc(100% + 8px);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* De punt onder de foto */
+.video-marker__card::after {
+  content: '';
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  translate: -50% 0;
+  border: 8px solid transparent;
+  border-bottom: 0;
+  border-top-color: #fff;
+}
+
+.video-marker__card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9px;
+}
+
+.video-marker__play {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--nos-blue);
+  color: #fff;
+}
+
+.video-marker__play svg {
+  width: 13px;
+  height: 13px;
+  margin-left: 1px;
+}
+
+.video-marker:hover,
+.video-marker:focus-visible {
+  z-index: 100000;
+}
+
+.video-marker:hover .video-marker__card,
+.video-marker:focus-visible .video-marker__card {
+  transform: scale(1.12);
+  box-shadow: 0 8px 22px rgb(6 12 60 / 0.55);
+}
+
+.video-marker:focus-visible {
+  outline: none;
+}
+
+.video-marker:focus-visible .video-marker__card {
+  outline: 2px solid var(--nos-blue-light);
+  outline-offset: 3px;
+}
+
+/* Een stapel: twee foto's die er schuin achter uitsteken */
+.video-marker--cluster .video-marker__card {
+  box-shadow:
+    4px -4px 0 -1px #fff,
+    4px -4px 3px -1px rgb(6 12 60 / 0.5),
+    8px -8px 0 -2px #fff,
+    8px -8px 3px -2px rgb(6 12 60 / 0.5),
+    var(--shadow);
+}
+
+/* Aantal-badge in NOS-rood */
+.video-marker__count {
+  position: absolute;
+  top: -11px;
+  right: -13px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  border-radius: 13px;
+  background: var(--nos-red);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 22px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .video-marker {
+    --size: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-marker__card {
+    transition: none;
+  }
+}
+
+/* Videospeler: donkere lichtbak zoals in de Zandvoort-special */
+
+.player {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--nos-ink);
+}
+
+.player[open] {
+  display: grid;
+  place-items: center;
+}
+
+.player::backdrop {
+  background: rgb(8 10 30 / 0.92);
+  backdrop-filter: blur(6px);
+}
+
+.player[open],
+.player[open]::backdrop {
+  animation: player-in 0.25s ease both;
+}
+
+@keyframes player-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.player__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: min(92vw, 1280px);
+  margin: 0;
+}
+
+.player__screen {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.6);
+}
+
+.player__video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100dvh - 160px);
+  background: #000;
+}
+
+/* Titel-pill onder de video */
+.player__title {
+  max-width: min(80vw, 720px);
+  padding: 9px 20px 10px;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--nos-black);
+  font-family: var(--display);
+  font-size: 1rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.player__close {
+  position: fixed;
+  top: 22px;
+  right: 26px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--nos-black);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.player__close:hover {
+  transform: scale(1.1);
+}
+
+.player__close:focus-visible {
+  outline: 2px solid var(--nos-blue-light);
+  outline-offset: 3px;
+}
+
+.player__close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.player__error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 16px;
+  background: rgb(0 0 0 / 0.8);
+  color: #fff;
+  text-align: center;
+}
+
+.player__error[hidden] {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .player__content {
+    width: 100%;
+  }
+
+  .player__screen {
+    border-radius: 0;
+  }
+
+  .player__close {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player[open],
+  .player[open]::backdrop {
+    animation: none;
+  }
+
+  .player__close {
+    transition: none;
+  }
+}
