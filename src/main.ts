@@ -14,7 +14,7 @@ import { Protocol } from 'pmtiles'
 import { east, north, south, west } from './map/friesland'
 import { nosStyle } from './map/style'
 import { addVideoMarkers } from './map/videoMarkers'
-import { openVideo } from './player'
+import { createPlayer } from './player'
 import './style.css'
 import { loadVideos } from './videos'
 
@@ -111,7 +111,8 @@ map.addControl(new ScaleControl({ unit: 'metric' }), 'bottom-right')
 
 loadVideos()
   .then((videos) => {
-    addVideoMarkers(map, videos, openVideo)
+    const player = createPlayer(videos)
+    addVideoMarkers(map, videos, player.open)
     const count = document.querySelector<HTMLElement>('.map-count')!
     count.textContent = videos.length === 1 ? '1 video' : `${videos.length} video's`
     count.hidden = false

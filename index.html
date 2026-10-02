@@ -28,7 +28,7 @@
       </div>
     </header>
 
-    <dialog id="player" class="player" aria-labelledby="player-title">
+    <dialog id="player" class="player" aria-label="Video's langs de route">
       <form method="dialog">
         <button class="player__close" aria-label="Sluiten">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -36,13 +36,21 @@
           </svg>
         </button>
       </form>
-      <figure class="player__content">
-        <div class="player__screen">
-          <video class="player__video" controls playsinline></video>
-          <p class="player__error" role="alert" hidden>Deze video kan nu niet worden afgespeeld.</p>
-        </div>
-        <figcaption id="player-title" class="player__title"></figcaption>
-      </figure>
+      <p class="player__counter" aria-live="polite"></p>
+      <section class="carousel" aria-roledescription="carousel" aria-label="Video's">
+        <!-- slides komen uit src/player.ts -->
+        <div class="carousel__track"></div>
+        <button class="carousel__nav carousel__nav--prev" type="button" aria-label="Vorige video">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button class="carousel__nav carousel__nav--next" type="button" aria-label="Volgende video">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </section>
     </dialog>
     <script type="module" src="/src/main.ts"></script>
   </body>
