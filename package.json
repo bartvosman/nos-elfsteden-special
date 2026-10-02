@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/check-tiles.mjs",
+    "predev": "node scripts/tiles.mjs --if-missing",
     "dev": "vite",
-    "prebuild": "node scripts/check-tiles.mjs",
+    "prebuild": "node scripts/tiles.mjs --if-missing",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tiles": "bash scripts/tiles.sh"
+    "tiles": "node scripts/tiles.mjs"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.16",

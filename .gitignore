@@ -23,5 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-# Protomaps vector tile extracts (large binaries, regenerate with `npm run tiles`)
+# Protomaps vector tile extracts (large binaries; `npm run dev`/`build` create them via scripts/tiles.mjs)
 public/tiles/*.pmtiles
